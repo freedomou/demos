@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="dao.UserDao">
+<mapper namespace="dao.org.example.UserDao">
     <select id="findUserById" resultType="user" parameterType="int">
         select * from user where uid = #{uid}
     </select>

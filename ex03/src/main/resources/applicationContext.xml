@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--控制层-->
+    <bean id="c" class="ncjt.controller.UserController">
+       <property name="userService" ref="service"/>
+    </bean>
+
+    <!--业务层-->
+    <bean id="service" class="ncjt.service.impl.UserServiceImpl">
+       <property name="userDao" ref="oracleldao"></property>
+    </bean>
+
+
+    <!--dao层-->
+    <bean id="mysqldao" class="ncjt.dao.impl.org.example.UserDaoImpl"></bean>
+    <bean id="oracleldao" class="ncjt.dao.impl.UserDaoImpl02"></bean>
+</beans>

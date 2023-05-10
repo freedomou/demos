@@ -6,6 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="ex09" />
+        <module name="ex08" />
+        <module name="ex07" />
+        <module name="ex05" />
+        <module name="ex04" />
+        <module name="ex03" />
         <module name="ex02" />
         <module name="ex01" />
       </profile>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
+http://www.springframework.org/schema/tx https://www.springframework.org/schema/tx/spring-tx.xsd">
+
+       <bean id="accountDao" class="dao.AccountDaoImpl">
+              <property name="jdbcTemplate" ref="mytemplate"/>
+       </bean>
+       <bean id="mytemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+            <property name="dataSource" ref="myds"/>
+       </bean>
+       <bean id="myds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+              <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+              <property name="url" value="jdbc:mysql:///spring"/>
+              <property name="username" value="root"/>
+              <property name="password" value="123456"/>
+       </bean>
+       <bean id="transactionManager" class= "org.springframework.jdbc.datasource.DataSourceTransactionManager">
+              <property name="dataSource" ref="myds" />
+       </bean>
+
+       <!-- 编写通知，需要编写对切入点和具体执行事务细节-->
+       <tx:advice id="txAdvice" transaction-manager="transactionManager">
+              <tx:attributes>
+                     <tx:method name="*" propagation="REQUIRED" isolation="DEFAULT" read-only="false" />
+              </tx:attributes>
+       </tx:advice>
+       <!-- 编写aop，使用AspectJ的表达式，让spring自动对目标生成代理-->
+       <aop:config>
+              <aop:pointcut expression="execution(* dao.AccountDaoImpl.*(..))" id="txPointCut" />
+              <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointCut"/>
+       </aop:config>
+
+
+</beans>
